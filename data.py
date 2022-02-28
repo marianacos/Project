@@ -150,6 +150,20 @@ def target(X,Buoy,ex_vars,eb_vars,fctime=0):
     
     return y,buoys_corresp 
 
+def scaled_dataset(input_scaler, output_scaler,X_train,X_test,y_train,y_test):
+    
+    if input_scaler is not None:
+        input_scaler.fit(X_train)
+        X_train = pd.DataFrame(input_scaler.transform(X_train),columns=X_train.columns)
+        X_test = pd.DataFrame(input_scaler.transform(X_test),columns=X_test.columns)
+        
+    if output_scaler is not None:
+        output_scaler.fit(y_train)
+        y_train = pd.DataFrame(output_scaler.transform(y_train),columns=y_train.columns)
+        y_test = pd.DataFrame(output_scaler.transform(y_test),columns=y_test.columns)
+        
+    return X_train, X_test, y_train, y_test, input_scaler, output_scaler
+
 def split_years(X,y,yearsTrain,yearsTest):
     '''
     X - dataframe of inputs.
