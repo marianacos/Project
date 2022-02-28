@@ -150,6 +150,18 @@ def target(X,Buoy,ex_vars,eb_vars,fctime=0):
     
     return y,buoys_corresp 
 
+def split_years(X,y,yearsTrain,yearsTest):
+    '''
+    X - dataframe of inputs.
+    y - corresponding outputs.
+    yearsTrain/yearsTest - list of years of data selected for training set/test set. 
+    '''
+    X_train=X.loc[np.isin(pd.DatetimeIndex(X.index.get_level_values('time')).year.astype(int),list(map(int, yearsTrain)))]
+    y_train=y.loc[np.isin(pd.DatetimeIndex(y.index.get_level_values('time')).year.astype(int),list(map(int, yearsTrain)))]
+
+    X_test=X.loc[np.isin(pd.DatetimeIndex(X.index.get_level_values('time')).year.astype(int),list(map(int, yearsTest)))]
+    y_test=y.loc[np.isin(pd.DatetimeIndex(y.index.get_level_values('time')).year.astype(int),list(map(int, yearsTest)))]
+
 def series_to_supervised(train,test,outvars,scaler=MinMaxScaler(),n_in=1,n_out=1,dropnan=True):
     '''
     Data reframe for LSTM.
