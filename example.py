@@ -11,9 +11,10 @@ import matplotlib
 import math
 importlib.reload(data)
 
-y,B=data.target(X,buoy,['swh','wspd'],['WVHT','WSPD'])
+#import buoy and x
 
-#import x
+y,B=data.target(x,buoy,['swh','wspd'],['WVHT','WSPD'])
+
 
 X_train, X_test, y_train, y_test=data.split_years(x,y,[2014,2015],[2016])    
 Xtrain, Xtest, ytrain, ytest, input_scaler, output_scaler=data.scaled_dataset(StandardScaler(), 
